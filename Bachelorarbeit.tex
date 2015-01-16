@@ -1,0 +1,206 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Optionen zum Layout des Artikels                                  %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[%
+a4paper,							% alle weiteren Papierformat einstellbar
+oneside,							% einseitiger Druck
+%twoside,							% Doppelseiten
+%twocolumn,						% zweispaltiger Satz
+%landscape,						% Querformat
+12pt,								% Schriftgröße (12pt, 11pt (Standard))
+%BCOR1cm,							% Bindekorrektur, bspw. 1 cm
+%DIVcalc,							% führt die Satzspiegelberechnung neu aus
+%halfparskip*,				% Absatzformatierung s. scrguide 3.1
+headsepline,					% Trennline zum Seitenkopf	
+footsepline,					% Trennline zum Seitenfuß
+titlepage,						% Titelei auf eigener Seite
+%normalheadings,			% Überschriften etwas kleiner (smallheadings)
+%leqno,   						% Nummerierung von Gleichungen links
+%fleqn,								% Ausgabe von Gleichungen linksbündig
+%draft								% überlangen Zeilen in Ausgabe gekennzeichnet
+toc=listof,						% Abb.-Verzeichnis im Inhalt
+toc=bibliography			% Tab.-Verzeichnis im Innhalt
+]
+{scrbook}
+
+
+%% Deutsche Anpassungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[ngerman]{babel}
+\usepackage[ngerman]{translator}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc} %UTF-8 als Charset
+\usepackage{lmodern} % Type1-Schriftart für nicht-englische Texte
+\usepackage[autostyle=true,german=quotes]{csquotes}
+
+
+
+
+
+%% Globale Variablen und Funktionen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\author}{Autor}
+\renewcommand{\title}{Ein geeigneter Titel}
+\newcommand{\uni}{Duale Hochschule Baden-Württemberg Mannheim}
+\newcommand{\art}{Bachelorarbeit}
+\newcommand{\studiengang}{International Management for Business and Information Technology}
+\newcommand{\ort}{Mannheim}
+\newcommand{\abgabedatum}{xx.xx.xx}
+\newcommand{\kurs}{Kurs}
+\newcommand{\matrikelnummer}{M-Nr.}
+\newcommand{\firma}{Unternehmen}
+\newcommand{\firmenort}{Firmenort}
+\newcommand{\firmenbetreuer}{Betreuer}
+\newcommand{\hochschulbetreuer}{Betreuer}
+
+
+% freie Seiten ohne Seitencounter zu erhöhen
+\newcommand\blankpage{%
+	\newpage
+	\thispagestyle{empty}
+	\mbox{}
+	\addtocounter{page}{-1}
+	\newpage
+}
+
+% Abstractumgebung definieren
+\newenvironment{abstract}%
+    {\thispagestyle{empty}\null\vfill\begin{center}%
+    \bfseries\abstractname\end{center}}%
+    {\vfill\null}
+
+%% allgemeine Paketimports und Einstellungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\usepackage{color}
+\definecolor{LinkColor}{rgb}{0,0,0}
+\definecolor{ListingBackground}{rgb}{0.92,0.92,0.92}
+
+% Verlinkunggen innheralb der PDF, PDF Attribute, etc. 
+\usepackage[%
+	pdftitle={\title},
+	pdfauthor={\author},
+	pdfsubject={\art},
+	pdfcreator={pdflatex, LaTeX with KOMA-Script},
+	pdfpagemode=UseOutlines, % Beim Oeffnen Inhaltsverzeichnis anzeigen
+	pdfdisplaydoctitle=true, % Dokumenttitel statt Dateiname anzeigen.
+	pdflang=de % Sprache des Dokuments.
+]{hyperref} 
+
+% (Farb-)einstellungen für die Links im PDF
+\hypersetup{%
+	colorlinks=true, % Aktivieren von farbigen Links im Dokument
+	linkcolor=LinkColor, % Farbe festlegen
+	citecolor=LinkColor,
+	filecolor=LinkColor,
+	menucolor=LinkColor,
+	urlcolor=LinkColor,
+	bookmarksnumbered=false % Überschriftsnummerierung im PDF Inhalt anzeigen.
+}
+
+\usepackage{bookmark}
+\bookmarksetup{
+  numbered, 
+  open,
+}
+
+% Einstellungen für das Inhaltsverzeichnis
+\usepackage{tocstyle}
+\newtocstyle[KOMAlike][leaders]{alldotted}{}
+\usetocstyle{alldotted}
+
+% Glossar und Abkürzungsverzeichnis, Eintrag in TOC, keine Seitenzahlen hinter Eintrag
+\usepackage[toc, acronym, nonumberlist]{glossaries}
+\makeindex
+\makeglossaries
+\loadglsentries {content/glossar}
+\loadglsentries {content/acronyme}
+
+
+
+\usepackage[onehalfspacing]{setspace} %Zeilenabstand setzen
+
+\usepackage{geometry} %Seitenränder
+\geometry{a4paper, left=30mm, right=25mm,}
+
+\usepackage{graphicx} % Zum Laden von Grafiken
+
+\usepackage[%
+	style=authoryear,	%Harvard Style
+	backend=biber,			%Biber backend für UTF8 Support
+	isbn=false,
+	doi=false
+]{biblatex} % Bibliographiestil und Package
+\bibliography{content/bibliographie}	% Literaturverzeichnis
+
+
+\clubpenalty = 10000 
+\widowpenalty = 10000 
+\displaywidowpenalty = 10000
+
+\begin{document}
+
+\pagestyle{empty} %%Keine Kopf-/Fusszeilen auf den ersten Seiten.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Ihr Artikel                                                       %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\pdfbookmark[section]{Titelseite}{title}
+\input{content/titlepage}
+
+% Pagenumbering auf römisch für die Preambel
+\renewcommand{\thepage}{\Roman{page}}
+\setcounter{page}{1}
+
+%% Ehrenwörtliche Erklärung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\phantomsection
+\addcontentsline{toc}{chapter}{Ehrenwörtliche Erklärung}
+\input{content/ehrenwörtliche}
+\newpage
+
+
+%% Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\phantomsection
+\renewcommand\abstractname{Abstract} % Überschrift des Abstracts
+\begin{abstract}
+	\input{content/abstract}
+\end{abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+
+%% Inhaltsverzeichnis %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\phantomsection
+\tableofcontents			% Inhaltsverzeichnis
+\addcontentsline{toc}{chapter}{Inhaltsverzeichnis}
+
+
+% Pagenumbering auf arabisch für den Hauptteil
+\newpage
+\renewcommand{\thepage}{\arabic{page}}
+\setcounter{page}{1}
+
+%\pagestyle{empty}		% keine Kopf und Fußzeile (k. Seitenzahl)
+\pagestyle{headings}	% lebender Kolumnentitel  
+
+
+%% eigentlicher Inhalt %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{content/einführung}
+
+
+
+%% Appendix %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Pagenumbering wieder auf römisch für Appendix
+\newpage
+\renewcommand{\thepage}{\Roman{page}}
+\setcounter{page}{4}
+
+%% Verzeichnisse %%%%%%%%%%%%%%%%%%%%%%%%%%
+\listoftables				% Tabellenverzeichnis
+\listoffigures				% Abbildungsverzeichnis
+
+\printbibliography
+\printglossary[type=\acronymtype,title=Abkürzungsverzeichnis]
+\printglossary[type=main,title=Glossar]
+
+\end{document}
