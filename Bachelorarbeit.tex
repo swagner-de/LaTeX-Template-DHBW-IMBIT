@@ -199,7 +199,19 @@ toc=bibliography			% Tab.-Verzeichnis im Innhalt
 \listoftables				% Tabellenverzeichnis
 \listoffigures				% Abbildungsverzeichnis
 
-\printbibliography
+% getrennte Quellenverzeichnisse
+% für ein einzelnes Quellenverzeichnis nur \printbibliography ohne Optionen verwenden
+% Filter für die "`Hauptbibliografie"' bauen
+% !Die in diesem Filter genannten types unten als 'nottype' aufführen
+\defbibfilter{main}{
+	type=article
+	or type=book
+}
+
+\printbibliography[filter=main] % Hauptbibliografie drucken
+\printbibliography[title={Sonstige Quellen}, nottype=book, nottype=article] % Sonstige Quellen drucken
+
+
 \printglossary[type=\acronymtype,title=Abkürzungsverzeichnis]
 \printglossary[type=main,title=Glossar]
 

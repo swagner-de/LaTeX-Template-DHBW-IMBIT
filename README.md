@@ -43,3 +43,5 @@ Die aktuelle Version von biber ist zu finden unter: http://sourceforge.net/proje
 == Changelog ==
 
 16.01.2015	initial checkin
+
+20.01.2015	getrennte Quellenverzeichnisse
