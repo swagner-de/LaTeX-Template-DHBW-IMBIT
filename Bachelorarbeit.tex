@@ -167,17 +167,18 @@ toc=bibliography			% Tab.-Verzeichnis im Innhalt
 
 %% Abstract %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \phantomsection
+\addcontentsline{toc}{chapter}{Abstract}
 \renewcommand\abstractname{Abstract} % Überschrift des Abstracts
 \begin{abstract}
 	\input{content/abstract}
 \end{abstract}
-\addcontentsline{toc}{chapter}{Abstract}
+\newpage
 
 
 %% Inhaltsverzeichnis %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \phantomsection
-\tableofcontents			% Inhaltsverzeichnis
 \addcontentsline{toc}{chapter}{Inhaltsverzeichnis}
+\tableofcontents			% Inhaltsverzeichnis
 
 
 % Pagenumbering auf arabisch für den Hauptteil
